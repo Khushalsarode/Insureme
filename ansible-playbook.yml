@@ -15,6 +15,12 @@
     command : sudo systemctl start docker
     become : yes
     become_user : root
-
+    
+  - name : stop existing running container
+    shell : docker stop $(docker ps -a -q)
+    
+  - name : delete all available container
+    shell : docker rm $(docker ps -a -q)
+    
   - name: Deploy Docker Container
     command: docker run -itd -p 8084:8081 khushalsarode/insureme:1.0
